@@ -1,0 +1,68 @@
+import 'package:example/Kullanici/signup.dart';
+import 'package:example/Tools/app_tools.dart';
+import 'package:flutter/material.dart';
+
+class Panel extends StatefulWidget {
+    @override
+    _PanelState createState() => _PanelState();
+  }
+  
+  class _PanelState extends State<Panel> {
+      TextEditingController email = new TextEditingController();
+      TextEditingController password = new TextEditingController();
+      final scaffoldKey = new GlobalKey<ScaffoldState>();
+      BuildContext context;
+    @override
+    Widget build(BuildContext context) {
+      this.context = context;
+      return Scaffold(
+        key: scaffoldKey,
+        appBar: new AppBar(
+          title: new Text('Login '), centerTitle: false,
+          backgroundColor: Theme.of(context).primaryColorLight, 
+          elevation: 0.0,
+        ),
+        body: SingleChildScrollView(
+          child: new Column(
+            children: <Widget>[
+              
+              new SizedBox(height: 20.0,),               
+                appTextField(
+                isPassword: false,
+                sidePadding: 18.0,
+                textHint: 'Email Adresi',
+                textIcon: Icons.mail,
+                controller: email,
+              ),
+              new SizedBox(height: 20.0,), 
+              appTextField(
+                isPassword: true,
+                sidePadding: 18.0,
+                textHint: 'Sifre',
+                textIcon: Icons.lock,
+                controller: password,
+              ),
+              appButton(
+                btnTxt: 'Login',
+                onBtnclicked: verifyLogin,
+                btnPadding: 20.0,
+                btnColor: Theme.of(context).primaryColor,
+              ),
+              GestureDetector(
+               child: new Text('Kayıt Olmadınız mı? Buraya Tıklayın',style: TextStyle(color: Colors.red),),
+               onTap: () {
+                 Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new SignUp()));
+               },
+               ),
+            ],
+          ),
+        ),
+    );
+    } 
+      verifyLogin() 
+    {
+      if(email.text == "") { showSnackBar('Email Boş Olamaz', scaffoldKey);}
+      if(password.text == "") { showSnackBar('Email Boş Olamaz', scaffoldKey);} displayProgressDialog(context);
+    }
+    
+  }
